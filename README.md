@@ -12,7 +12,7 @@ Una *skill* es una carpeta con instrucciones que Claude carga cuando la tarea lo
 |---|---|---|
 | [`explica-api`](explica-api/) | Día 1 · ¿Qué es una API? | Pegas una respuesta o un error de una API y te dice qué pasó, la causa probable y cómo arreglarlo. |
 | [`primera-api`](primera-api/) | Día 2 · Cómo se construye una API | Arma contigo tu primera API con Python y FastAPI, con pruebas incluidas y solución a los errores típicos de Windows. |
-| [`sql-o-nosql`](sql-o-nosql/) | Día 3 · Bases de datos: SQL y NoSQL | Te entrevista, puntúa tu proyecto en una matriz y te entrega la recomendación con el primer diseño de tablas o documentos. |
+| [`sql-o-nosql`](sql-o-nosql/) | Día 3 · Bases de datos: SQL y NoSQL | Analiza tu proyecto (descripción o código) y te entrega la arquitectura de datos completa: qué base te conviene y por qué, mapa de entidades, esquema, índices y una **base de datos prototipo que ya funciona**, con sus reglas probadas. |
 
 Se agrega una nueva con cada tema que la amerite.
 
