@@ -11,6 +11,7 @@ Una *skill* es una carpeta con instrucciones que Claude carga cuando la tarea lo
 | Skill | Tema de Learning | Qué hace |
 |---|---|---|
 | [`explica-api`](explica-api/) | Día 1 · ¿Qué es una API? | Pegas una respuesta o un error de una API y te dice qué pasó, la causa probable y cómo arreglarlo. |
+| [`primera-api`](primera-api/) | Día 2 · Cómo se construye una API | Arma contigo tu primera API con Python y FastAPI, con pruebas incluidas y solución a los errores típicos de Windows. |
 
 Se agrega una nueva con cada tema que la amerite.
 
