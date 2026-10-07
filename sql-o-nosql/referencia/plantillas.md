@@ -64,3 +64,37 @@ db.createCollection("lecturas", {
 ```
 
 Reglas: la «última lectura por sensor» se guarda aparte (tabla o documento `ultima_lectura` actualizado en cada escritura, o caché en Redis) para no recorrer la serie completa; las alertas se calculan al escribir, no al consultar.
+
+## Estructura de `informe-datos.md`
+
+```markdown
+# Arquitectura de datos · <nombre del proyecto>
+Fecha · Fuentes analizadas (archivos o descripción) · Supuestos
+
+## 1. Resumen ejecutivo
+Recomendación en 3 líneas: modelo, motor, dónde alojarlo y la razón principal.
+
+## 2. Mapa de entidades
+Tabla entidad | atributos clave | relaciones (1:N, N:M) + diagrama Mermaid `erDiagram`.
+
+## 3. Patrones de acceso
+consulta | quién | frecuencia | latencia esperada | cómo se resuelve
+
+## 4. Matriz de decisión
+criterio | evidencia | inclina hacia | puntos · total · umbral
+
+## 5. Recomendación y alternativas descartadas
+Por qué (3–5 puntos con evidencia) · alternativa descartada y por qué · alojamiento
+
+## 6. Esquema
+DDL de PostgreSQL (o colecciones + validación) con índices justificados
+
+## 7. Prototipo
+Cómo correr `python prototipo/probar_prototipo.py` y abrir `prototipo.db`; resultado de la prueba
+
+## 8. Crecimiento y riesgos
+A 10× · a 100× · riesgos y mitigación
+
+## 9. Checklist de implementación
+Pasos concretos para pasar del prototipo a producción (migraciones, respaldos, accesos)
+```
