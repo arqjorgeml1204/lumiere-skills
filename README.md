@@ -15,6 +15,7 @@ Una *skill* es una carpeta con instrucciones que Claude carga cuando la tarea lo
 | [`sql-o-nosql`](sql-o-nosql/) | Día 3 · Bases de datos: SQL y NoSQL | Analiza tu proyecto (descripción o código) y te entrega la arquitectura de datos completa: qué base te conviene y por qué, mapa de entidades, esquema, índices y una **base de datos prototipo que ya funciona**, con sus reglas probadas. |
 | [`dockeriza`](dockeriza/) | Día 5 · Docker y contenedores | Analiza tu proyecto, le escribe su `Dockerfile`, su `.dockerignore` y su `docker-compose`, y los prueba construyendo y arrancando el contenedor antes de entregártelos (si no tienes Docker, los marca «sin probar» y te dice cómo probarlos). |
 | [`publica-solo`](publica-solo/) | Día 7 · CI/CD: publicar sin hacerlo a mano | Prepara la publicación automática de tu proyecto y la prueba: detecta tu lenguaje, tus pruebas y tu destino de despliegue, escribe el workflow de GitHub Actions, lo valida y corre aquí los mismos comandos de pruebas antes de entregártelo, con un informe de lo que te toca hacer a ti. |
+| [`mejora-prompt`](mejora-prompt/) | Día 10 · Prompts: cómo hablarle a una IA | Toma tu prompt y tus casos reales, lo prueba tal cual, lo reescribe con las cuatro piezas de un buen prompt, lo vuelve a probar con un caso trampa y te entrega el prompt final con un informe antes/después generado por un script. |
 
 Se agrega una nueva con cada tema que la amerite.
 
