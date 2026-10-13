@@ -17,6 +17,7 @@ Una *skill* es una carpeta con instrucciones que Claude carga cuando la tarea lo
 | [`publica-solo`](publica-solo/) | Día 7 · CI/CD: publicar sin hacerlo a mano | Prepara la publicación automática de tu proyecto y la prueba: detecta tu lenguaje, tus pruebas y tu destino de despliegue, escribe el workflow de GitHub Actions, lo valida y corre aquí los mismos comandos de pruebas antes de entregártelo, con un informe de lo que te toca hacer a ti. |
 | [`mejora-prompt`](mejora-prompt/) | Día 10 · Prompts: cómo hablarle a una IA | Toma tu prompt y tus casos reales, lo prueba tal cual, lo reescribe con las cuatro piezas de un buen prompt, lo vuelve a probar con un caso trampa y te entrega el prompt final con un informe antes/después generado por un script. |
 | [`pregunta-a-tus-pdfs`](pregunta-a-tus-pdfs/) | Día 11 · RAG: IA que lee tus documentos | Indexa tu carpeta de documentos (PDF, Word, texto), busca los fragmentos de cada pregunta, responde citando documento y página, y comprueba con un script que cada cita exista tal cual en esa página antes de entregarte las respuestas. |
+| [`disena-agente`](disena-agente/) | Día 13 · Agentes de IA | Convierte una tarea repetitiva tuya en un agente de Claude Code con herramientas mínimas, barandales y aprobación humana para lo irreversible; valida el archivo del agente con un script y lo ensaya con datos de prueba y una trampa antes de entregártelo. |
 
 Se agrega una nueva con cada tema que la amerite.
 
