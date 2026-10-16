@@ -1,0 +1,137 @@
+{
+  "aviso": "Los precios cambian. Antes de usar estos números, ábrelos en la URL «fuente» de cada proveedor y, si algo cambió, corrige este archivo y su fecha «consultado». El script avisa si la fecha tiene más de 60 días.",
+  "moneda": "USD por millón de tokens (MTok)",
+  "campos": {
+    "entrada": "tokens de entrada que NO salen de la caché",
+    "cache_lectura": "tokens de entrada leídos de la caché (acierto)",
+    "cache_escritura": "tokens de entrada escritos en la caché la primera vez (5 minutos en Claude). Si el proveedor no cobra la escritura aparte, es igual a «entrada»",
+    "salida": "tokens que genera el modelo (incluye razonamiento o thinking)",
+    "minimo_cache": "tokens mínimos del prefijo para que la caché funcione (null = el proveedor no lo publica)",
+    "umbral / sobre_umbral": "si la entrada total de UNA llamada pasa del umbral, toda la llamada usa los precios de «sobre_umbral»",
+    "vigente_hasta / siguiente": "precio con fecha de cambio publicada; después de esa fecha el script usa «siguiente»"
+  },
+  "proveedores": {
+    "anthropic": {
+      "fuente": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "fuente_ids": "https://platform.claude.com/docs/en/about-claude/models/overview",
+      "consultado": "2026-10-15",
+      "modelo_economico": "claude-haiku-5-5",
+      "cache": {
+        "como_se_activa": "Explícita: agrega cache_control a la petición (automático en el nivel superior) o a bloques concretos. Dura 5 minutos por defecto y se renueva gratis en cada acierto; 1 hora cuesta más.",
+        "multiplicador_escritura_5m": 1.25,
+        "multiplicador_escritura_1h": 2.0,
+        "multiplicador_lectura": 0.1,
+        "excepciones_lectura": "0.05x en Claude Opus 5.5 y Sonnet 5.5; 0.025x en Claude Fable 5.1"
+      },
+      "notas": [
+        "Batch API (por lotes): 50 % de descuento en entrada y salida, se combina con la caché.",
+        "Claude 4.7 y posteriores usan un tokenizador nuevo que produce ~30 % más tokens para el mismo texto que Claude 4.6 y anteriores.",
+        "En la respuesta, input_tokens NO incluye los tokens de caché: total = input_tokens + cache_read_input_tokens + cache_creation_input_tokens."
+      ],
+      "modelos": {
+        "claude-fable-5-1": {"nombre": "Claude Fable 5.1", "entrada": 10, "cache_escritura": 12.5, "cache_lectura": 0.25, "salida": 50, "minimo_cache": 512},
+        "claude-fable-5": {"nombre": "Claude Fable 5", "entrada": 10, "cache_escritura": 12.5, "cache_lectura": 1, "salida": 50, "minimo_cache": 512},
+        "claude-opus-5-5": {"nombre": "Claude Opus 5.5", "entrada": 4, "cache_escritura": 5, "cache_lectura": 0.2, "salida": 20, "minimo_cache": 512},
+        "claude-opus-5": {"nombre": "Claude Opus 5", "entrada": 5, "cache_escritura": 6.25, "cache_lectura": 0.5, "salida": 25, "minimo_cache": 512},
+        "claude-opus-4-8": {"nombre": "Claude Opus 4.8", "entrada": 5, "cache_escritura": 6.25, "cache_lectura": 0.5, "salida": 25, "minimo_cache": 1024},
+        "claude-opus-4-7": {"nombre": "Claude Opus 4.7", "entrada": 5, "cache_escritura": 6.25, "cache_lectura": 0.5, "salida": 25, "minimo_cache": 2048},
+        "claude-opus-4-6": {"nombre": "Claude Opus 4.6", "entrada": 5, "cache_escritura": 6.25, "cache_lectura": 0.5, "salida": 25, "minimo_cache": 4096},
+        "claude-opus-4-5": {"nombre": "Claude Opus 4.5", "entrada": 5, "cache_escritura": 6.25, "cache_lectura": 0.5, "salida": 25, "minimo_cache": 4096},
+        "claude-sonnet-5-5": {"nombre": "Claude Sonnet 5.5", "entrada": 2, "cache_escritura": 2.5, "cache_lectura": 0.1, "salida": 10, "minimo_cache": 512},
+        "claude-sonnet-5": {"nombre": "Claude Sonnet 5", "entrada": 2, "cache_escritura": 2.5, "cache_lectura": 0.2, "salida": 10, "minimo_cache": 1024},
+        "claude-sonnet-4-6": {"nombre": "Claude Sonnet 4.6", "entrada": 3, "cache_escritura": 3.75, "cache_lectura": 0.3, "salida": 15, "minimo_cache": 1024},
+        "claude-sonnet-4-5": {"nombre": "Claude Sonnet 4.5", "entrada": 3, "cache_escritura": 3.75, "cache_lectura": 0.3, "salida": 15, "minimo_cache": 1024},
+        "claude-haiku-5-5": {"nombre": "Claude Haiku 5.5", "entrada": 0.1, "cache_escritura": 0.125, "cache_lectura": 0.01, "salida": 0.5, "minimo_cache": 512,
+          "umbral": 100000, "sobre_umbral": {"entrada": 0.5, "cache_escritura": 0.625, "cache_lectura": 0.05, "salida": 2.5}},
+        "claude-haiku-4-5": {"nombre": "Claude Haiku 4.5", "entrada": 1, "cache_escritura": 1.25, "cache_lectura": 0.1, "salida": 5, "minimo_cache": 4096}
+      }
+    },
+    "openai": {
+      "fuente": "https://developers.openai.com/api/docs/pricing",
+      "fuente_cache": "https://developers.openai.com/api/docs/guides/prompt-caching",
+      "consultado": "2026-10-15",
+      "modelo_economico": "gpt-6-luna",
+      "cache": {
+        "como_se_activa": "Automática en los modelos compatibles desde 1024 tokens de prefijo idéntico. En GPT-5.6 y posteriores dura al menos 30 minutos.",
+        "multiplicador_escritura": "1.25x en GPT-5.6 y posteriores; sin cargo extra de escritura en modelos anteriores",
+        "multiplicador_lectura": 0.1,
+        "excepciones_lectura": "0.05x en GPT-6.1 Sol"
+      },
+      "notas": [
+        "Contexto largo: si la entrada pasa de 272K tokens, la llamada usa los precios de «sobre_umbral».",
+        "En los precios de contexto largo, la escritura de caché se calculó con el multiplicador 1.25x publicado (la tabla solo la publica para contexto corto).",
+        "El precio de GPT-5.6 Sol es promocional al menos hasta el 21 de noviembre de 2026.",
+        "En la respuesta, prompt_tokens / input_tokens SÍ incluyen los tokens en caché (cached_tokens)."
+      ],
+      "modelos": {
+        "gpt-6-astra": {"entrada": 10, "cache_escritura": 12.5, "cache_lectura": 1, "salida": 50, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 20, "cache_escritura": 25, "cache_lectura": 2, "salida": 75}},
+        "gpt-6.1-sol": {"entrada": 2, "cache_escritura": 2.5, "cache_lectura": 0.1, "salida": 10, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 4, "cache_escritura": 5, "cache_lectura": 0.2, "salida": 15}},
+        "gpt-6-sol": {"entrada": 2, "cache_escritura": 2.5, "cache_lectura": 0.2, "salida": 10, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 4, "cache_escritura": 5, "cache_lectura": 0.4, "salida": 15}},
+        "gpt-6-luna": {"entrada": 0.1, "cache_escritura": 0.125, "cache_lectura": 0.01, "salida": 0.5, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 0.2, "cache_escritura": 0.25, "cache_lectura": 0.02, "salida": 0.75}},
+        "gpt-5.6-sol": {"entrada": 4, "cache_escritura": 5, "cache_lectura": 0.4, "salida": 20, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 8, "cache_escritura": 10, "cache_lectura": 0.8, "salida": 30}},
+        "gpt-5.6-terra": {"entrada": 2, "cache_escritura": 2.5, "cache_lectura": 0.2, "salida": 12, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 4, "cache_escritura": 5, "cache_lectura": 0.4, "salida": 18}},
+        "gpt-5.6-luna": {"entrada": 0.2, "cache_escritura": 0.25, "cache_lectura": 0.02, "salida": 1.2, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 0.4, "cache_escritura": 0.5, "cache_lectura": 0.04, "salida": 1.8}},
+        "gpt-5.5": {"entrada": 5, "cache_escritura": 5, "cache_lectura": 0.5, "salida": 30, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 10, "cache_escritura": 10, "cache_lectura": 1, "salida": 45}},
+        "gpt-5.4": {"entrada": 2.5, "cache_escritura": 2.5, "cache_lectura": 0.25, "salida": 15, "minimo_cache": 1024,
+          "umbral": 272000, "sobre_umbral": {"entrada": 5, "cache_escritura": 5, "cache_lectura": 0.5, "salida": 22.5}},
+        "gpt-5.4-mini": {"entrada": 0.75, "cache_escritura": 0.75, "cache_lectura": 0.075, "salida": 4.5, "minimo_cache": 1024},
+        "gpt-5.4-nano": {"entrada": 0.2, "cache_escritura": 0.2, "cache_lectura": 0.02, "salida": 1.25, "minimo_cache": 1024},
+        "gpt-5.2": {"entrada": 1.75, "cache_escritura": 1.75, "cache_lectura": 0.175, "salida": 14, "minimo_cache": 1024},
+        "gpt-5.1": {"entrada": 1.25, "cache_escritura": 1.25, "cache_lectura": 0.125, "salida": 10, "minimo_cache": 1024},
+        "gpt-5": {"entrada": 1.25, "cache_escritura": 1.25, "cache_lectura": 0.125, "salida": 10, "minimo_cache": 1024},
+        "gpt-5-mini": {"entrada": 0.25, "cache_escritura": 0.25, "cache_lectura": 0.025, "salida": 2, "minimo_cache": 1024},
+        "gpt-5-nano": {"entrada": 0.05, "cache_escritura": 0.05, "cache_lectura": 0.005, "salida": 0.4, "minimo_cache": 1024},
+        "gpt-4.1": {"entrada": 2, "cache_escritura": 2, "cache_lectura": 0.5, "salida": 8, "minimo_cache": 1024},
+        "gpt-4.1-mini": {"entrada": 0.4, "cache_escritura": 0.4, "cache_lectura": 0.1, "salida": 1.6, "minimo_cache": 1024},
+        "gpt-4.1-nano": {"entrada": 0.1, "cache_escritura": 0.1, "cache_lectura": 0.025, "salida": 0.4, "minimo_cache": 1024},
+        "gpt-4o": {"entrada": 2.5, "cache_escritura": 2.5, "cache_lectura": 1.25, "salida": 10, "minimo_cache": 1024},
+        "gpt-4o-2024-05-13": {"entrada": 5, "cache_escritura": 5, "cache_lectura": null, "salida": 15, "minimo_cache": null},
+        "gpt-4o-mini": {"entrada": 0.15, "cache_escritura": 0.15, "cache_lectura": 0.075, "salida": 0.6, "minimo_cache": 1024},
+        "o3": {"entrada": 2, "cache_escritura": 2, "cache_lectura": 0.5, "salida": 8, "minimo_cache": 1024},
+        "o4-mini": {"entrada": 1.1, "cache_escritura": 1.1, "cache_lectura": 0.275, "salida": 4.4, "minimo_cache": 1024}
+      }
+    },
+    "google": {
+      "fuente": "https://ai.google.dev/gemini-api/docs/pricing",
+      "fuente_cache": "https://ai.google.dev/gemini-api/docs/caching",
+      "consultado": "2026-10-15",
+      "modelo_economico": "gemini-3.1-flash-lite",
+      "cache": {
+        "como_se_activa": "Implícita y automática en Gemini 2.5 y posteriores cuando el prefijo se repite; la caché explícita cobra además almacenamiento por hora (no se simula aquí).",
+        "multiplicador_escritura": "sin cargo extra en la caché implícita (se cobra como entrada normal)",
+        "multiplicador_lectura": 0.1
+      },
+      "notas": [
+        "Precios de nivel pagado (Standard), texto/imagen/video.",
+        "Gemini 3.1 Pro Preview y 2.5 Pro cobran más si la entrada pasa de 200K tokens.",
+        "Gemini 4 Argon sube de precio el 1 de diciembre de 2026; Gemini 3.8 Flash y 3.6 Flash, el 1 de enero de 2027.",
+        "En la respuesta, prompt_token_count incluye los tokens en caché (cached_content_token_count); el razonamiento (thoughts_token_count) se cobra como salida."
+      ],
+      "modelos": {
+        "gemini-4-argon": {"entrada": 2, "cache_escritura": 2, "cache_lectura": 0.1, "salida": 10, "minimo_cache": 4096,
+          "vigente_hasta": "2026-11-30", "siguiente": {"entrada": 4, "cache_escritura": 4, "cache_lectura": 0.2, "salida": 20}},
+        "gemini-3.8-flash": {"entrada": 0.75, "cache_escritura": 0.75, "cache_lectura": 0.075, "salida": 3.75, "minimo_cache": 4096,
+          "vigente_hasta": "2026-12-31", "siguiente": {"entrada": 1.5, "cache_escritura": 1.5, "cache_lectura": 0.15, "salida": 7.5}},
+        "gemini-3.6-flash": {"entrada": 0.75, "cache_escritura": 0.75, "cache_lectura": 0.075, "salida": 3.75, "minimo_cache": 4096,
+          "vigente_hasta": "2026-12-31", "siguiente": {"entrada": 1.5, "cache_escritura": 1.5, "cache_lectura": 0.15, "salida": 7.5}},
+        "gemini-3.5-flash-lite": {"entrada": 0.3, "cache_escritura": 0.3, "cache_lectura": 0.03, "salida": 2.5, "minimo_cache": null},
+        "gemini-3.1-flash-lite": {"entrada": 0.25, "cache_escritura": 0.25, "cache_lectura": 0.025, "salida": 1.5, "minimo_cache": null},
+        "gemini-3.1-pro-preview": {"entrada": 2, "cache_escritura": 2, "cache_lectura": 0.2, "salida": 12, "minimo_cache": 4096,
+          "umbral": 200000, "sobre_umbral": {"entrada": 4, "cache_escritura": 4, "cache_lectura": 0.4, "salida": 18}},
+        "gemini-3-flash-preview": {"entrada": 0.5, "cache_escritura": 0.5, "cache_lectura": 0.05, "salida": 3, "minimo_cache": null},
+        "gemini-2.5-pro": {"entrada": 1.25, "cache_escritura": 1.25, "cache_lectura": 0.125, "salida": 10, "minimo_cache": 2048,
+          "umbral": 200000, "sobre_umbral": {"entrada": 2.5, "cache_escritura": 2.5, "cache_lectura": 0.25, "salida": 15}},
+        "gemini-2.5-flash": {"entrada": 0.3, "cache_escritura": 0.3, "cache_lectura": 0.03, "salida": 2.5, "minimo_cache": 2048},
+        "gemini-2.5-flash-lite": {"entrada": 0.1, "cache_escritura": 0.1, "cache_lectura": 0.01, "salida": 0.4, "minimo_cache": null}
+      }
+    }
+  }
+}

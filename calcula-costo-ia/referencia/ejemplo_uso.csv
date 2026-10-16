@@ -1,0 +1,6 @@
+fecha,funcion,modelo,tokens_entrada,tokens_salida,tokens_cache_lectura,tokens_cache_escritura,latencia_ms,hash_entrada
+2026-10-14 09:00:01,resumir,claude-sonnet-5-5,420,510,0,1800,9400,9c1f0a2b3d4e5f60
+2026-10-14 09:02:10,resumir,claude-sonnet-5-5,380,470,1800,0,8100,1a2b3c4d5e6f7081
+2026-10-14 09:02:40,clasificar,claude-haiku-5-5,60,2,900,0,350,aa11bb22cc33dd44
+2026-10-14 09:03:05,clasificar,claude-haiku-5-5,75,1,900,0,330,aa11bb22cc33dd44
+2026-10-14 09:30:00,responder,gpt-6-sol,700,180,1024,0,3900,5e6f708192a3b4c5
