@@ -18,7 +18,7 @@ Hecha por Lumière Autómata (reel «No publiques con Claude en Instagram sin sa
 
 | Pides | Script o referencia | Qué entrega |
 |---|---|---|
-| El **guion** de un reel | `scripts/analiza_guion.py` | Revisión de la voz: gancho, datos, cierre, pedidos, bucles y huecos sin terminar, con PASA/FALLA/AVISO |
+| El **guion** de un reel | `scripts/analiza_guion.py` | Revisión de la voz: gancho (≤ 5 s y que la 1.ª frase hable de ti o de algo que conoces, nunca de un desconocido), datos, cierre, pedidos, bucles y huecos sin terminar, con PASA/FALLA/AVISO |
 | El **caption** | `scripts/revisa_caption.py` | Primera línea visible, palabra clave arriba, spanglish, muletillas de IA, rayas, caracteres invisibles, pedidos y hashtags |
 | Un **mensaje automático de WhatsApp** | `scripts/revisa_whatsapp.py` + `referencia/plantillas_whatsapp.md` | Si suena a utilidad, a marketing o queda en duda; riesgo de que Meta te lo cobre como publicidad; si trae baja visible (un botón «Ahora no» pospone, no da de baja) |
 | Los **comentarios** de un post | `referencia/comentarios_y_perfil.md` §1 | Los comentarios ordenados en 6 grupos y las respuestas listas para copiar |
