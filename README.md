@@ -22,6 +22,8 @@ Una *skill* es una carpeta con instrucciones que Claude carga cuando la tarea lo
 | [`planos-de-software`](planos-de-software/) | Día 17 · PRDs, RFCs y design docs | Lee tu repositorio, decide con una tabla fija si tu cambio necesita PRD, design doc, RFC o ninguno, los escribe con las rutas reales de tu código, alternativas con su trade-off, métricas con número y plazo y plan de vuelta atrás, y los comprueba con un script antes de entregártelos. |
 | [`revisa-mi-codigo`](revisa-mi-codigo/) | Día 18 · Code review y mentoría | Revisa los cambios reales de tu rama, de tu pull request o de tu carpeta como lo haría un mentor: corre tus pruebas y tu linter, aplica un checklist fijo inspirado en la guía de Google y comprueba con un script que cada comentario cite una línea real del cambio y traiga nivel, porqué y propuesta. |
 
+| [`publica-con-claude`](publica-con-claude/) | Redes · «No publiques con Claude en Instagram sin saber esto» | Revisa en español lo que vas a publicar, con scripts que miden en lugar de opinar: el guion de tu reel (gancho, datos, cierre, pedidos), el caption (spanglish, muletillas de IA, primera línea y palabra clave) y tus mensajes automáticos de WhatsApp (si Meta te los cobraría como publicidad y si traen baja). Además ordena tus comentarios para contestarlos y califica tu perfil sobre 100. |
+
 Se agrega una nueva con cada tema que la amerite.
 
 ## Cómo instalarla
