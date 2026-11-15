@@ -36,6 +36,16 @@ CIERRE = re.compile(r"(Para mañana|En el curso te|Con esto cerramos|Hice una sk
 PEDIDOS = re.compile(r"(?i)\b(comenta|sígueme|déjal[ao] en los comentarios|dímelo|guárdalo|mándaselo|te leo|la guía (técnica )?está)\b")
 BUCLE_PLANTILLA = re.compile(r"(?i)^\s*(¿y si\b[^?]{0,25}\?|pero lo (bueno|mejor) (es|viene)|pero no cualquiera|¿y cómo\b[^?]{0,20}\?)")
 TECNICO = re.compile(r"(?i)^\s*¿?(qué (es|son)\b|así funciona|hoy (te )?(explico|vemos|aprendes))")
+# Regla de la 1.ª frase (R-029 @resultaaquee): la 1.ª frase habla de quien mira (tú) o de algo que ya conoce, nunca de un desconocido.
+TU = re.compile(r"(?i)\b(tú|tu|tus|te|ti|contigo|usted|ustedes|pides|pagas|apagas|abres|tienes|viste|sabías|das|dices|quieres|"
+                r"puedes|haces|usas|publiques|publicas|subes|mandas|ves|eres|estás|vas|imagina|mira|fíjate)\b")
+CONOCIDO = re.compile(r"(?i)\b(casa|celular|teléfono|computadora|compu|comida|boletos?|banco|tienda|trabajo|jefe|escuela|"
+                      r"mamá|papá|familia|chats?|fotos?|correo|oxxo|super(mercado)?|metro|tráfico|quincena|renta)\b")
+# Verbo en 2.ª persona al inicio o después de «si / cuando / mientras» («Si dejas…», «Pones un block…»).
+TU_VERBO = re.compile(r"(?i)^[¿¡«\"\s]*(?:(?:si|cuando|mientras|ya)\s+)?(?!antes\b|todas\b|estas\b|esas\b|unas\b|muchas\b|millones\b|veces\b)"
+                      r"[a-záéíóúñ]{3,}(?:as|es)\b")
+DESCONOCIDO = re.compile(r"(?i)^\s*¿?(alguien|un|una|este|esta|ese|esa|el|la)\s+(tío|tipo|hombre|mujer|señor|señora|chico|chica|"
+                         r"niño|niña|herrero|rey|reina|pistolero|soldado|granjero|científico|ingeniero|desconocido|personaje)\b|^\s*alguien\b")
 HUECO = re.compile(r"(\b[Cc]ierre M\d|\+ *CTA\b|\bTODO\b|\bPENDIENTE\b|<[^>]{2,}>)")
 
 # Límites de la regla 5ac (calibrados con METRICAS.md: Día 4 = 17× la mediana)
@@ -134,9 +144,15 @@ def revisa(beats, pps):
     vuelve = len(beats) > 1 and bool(g_words & {w.lower() for w in palabras(beats[-1])})
     plantilla = [b[:40] for b in beats if BUCLE_PLANTILLA.search(b)]
     huecos = [b[:50] for b in beats if HUECO.search(b)]
+    yo_numero = bool(re.search(r"(?i)\b(me|mi|mis|yo|grabé|hice|medí)\b", frase1)) and concreto(frase1, set())
+    habla_de_ti = not DESCONOCIDO.search(frase1) and (
+        bool(TU.search(frase1) or TU_VERBO.search(frase1) or CONOCIDO.search(frase1) or marcas(" " + frase1) or yo_numero))
     checks = [  # (id, pasa, detalle, grave): grave → FALLA; si no → AVISO
         ("gancho_1_frase", seg(frase1) <= GANCHO_MAX_S,
          f"1.ª frase del gancho: {seg(frase1):.1f} s ({len(palabras(frase1))} palabras); máx. {GANCHO_MAX_S:.0f} s", True),
+        ("gancho_habla_de_ti", habla_de_ti,
+         "la 1.ª frase habla de ti o de algo que conoces" if habla_de_ti else
+         "la 1.ª frase abre con un desconocido o sin «tú» ni nada que el público conozca (el «tú» en la 2.ª frase ya llega tarde)", True),
         ("gancho_sin_termino", not TECNICO.search(gancho), "el gancho no abre con «qué es…» ni con el término", True),
         ("datos_cada_3", not secos,
          f"3 tramos seguidos sin número ni marca, hasta el tramo {secos}" if secos else "hay número o marca al menos cada 3 tramos", True),
